@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Fenicia</title>
+    <link rel="icon" type="image/png" href="img/LogoVentana.png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Lato', 'sans-serif'],
+                        cursive: ['Dancing Script', 'cursive'], /* <-- Nueva fuente cursiva agregada */
+                    },
+                    colors: {
+                        gold: {
+                            100: '#F9F1D8',
+                            300: '#E6C685',
+                            500: '#C59D5F',
+                            900: '#5C4524',
+                        },
+                        stone: {
+                            50: '#FAFAF9',
+                            100: '#F5F5F4',
+                            800: '#292524',
+                            900: '#1C1917',
+                        },
+                        emerald: {
+                            600: '#059669',
+                            700: '#047857',
+                        }
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 1.2s ease-out forwards',
+                        'write': 'write 2.5s ease-in-out forwards', /* <-- Nueva animación de escritura */
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(40px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        write: {
+                            '0%': { clipPath: 'inset(0 100% 0 0)' },
+                            '100%': { clipPath: 'inset(0 0 0 0)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+<!--     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Lato:wght@300;400&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+ -->
+   <!--  <link href="https://fonts.googleapis.com/css2?family=Allura&family=Lato:wght@300;400&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"> -->
+    
+
+<!--     <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Lato:wght@300;400&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+ -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600&family=Lato:wght@300;400&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { transition: background-color 0.5s, color 0.5s; }
+        .reveal-on-scroll { opacity: 0; transition: opacity 1s ease-out, transform 1s ease-out; transform: translateY(30px); }
+        .reveal-on-scroll.visible { opacity: 1; transform: translateY(0); }
+        
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .dark .glass {
+            background: rgba(28, 25, 23, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800 dark:bg-stone-900 dark:text-stone-100 font-sans min-h-screen selection:bg-gold-300 selection:text-stone-900">
+
+    <nav class="fixed w-full z-50 glass shadow-sm transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex items-center justify-between h-24">
+                <a href="#inicio" class="flex-shrink-0 font-cursive text-4xl text-stone-900 dark:text-gold-100 transition-colors cursor-pointer hover:opacity-80">
+                    La Fenicia
+                </a>
+                
+                <div class="hidden md:flex items-center space-x-12">
+                    <a href="#inicio" class="relative group py-2 text-sm uppercase tracking-widest font-medium text-stone-600 dark:text-stone-300 hover:text-gold-500 dark:hover:text-gold-300 transition-colors">
+                        Inicio
+                        <span class="absolute bottom-0 left-0 w-0 h-[1px] bg-gold-500 dark:bg-gold-300 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#tratamientos" class="relative group py-2 text-sm uppercase tracking-widest font-medium text-stone-600 dark:text-stone-300 hover:text-gold-500 dark:hover:text-gold-300 transition-colors">
+                        Tratamientos
+                        <span class="absolute bottom-0 left-0 w-0 h-[1px] bg-gold-500 dark:bg-gold-300 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#contacto" class="relative group py-2 text-sm uppercase tracking-widest font-medium text-stone-600 dark:text-stone-300 hover:text-gold-500 dark:hover:text-gold-300 transition-colors">
+                        Contacto
+                        <span class="absolute bottom-0 left-0 w-0 h-[1px] bg-gold-500 dark:bg-gold-300 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                </div>
+
+                <div class="flex items-center space-x-6">
+                    <button id="theme-toggle" class="text-stone-500 dark:text-gold-100 hover:text-gold-500 transition-colors focus:outline-none">
+                        <i id="theme-toggle-light-icon" class="fas fa-sun hidden text-xl"></i>
+                        <i id="theme-toggle-dark-icon" class="fas fa-moon text-xl"></i>
+                    </button>
+                    <button id="mobile-menu-btn" class="md:hidden text-stone-800 dark:text-stone-100 hover:text-gold-500 focus:outline-none transition-colors">
+                        <i class="fas fa-bars text-2xl transition-transform duration-300" id="mobile-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="md:hidden glass border-t border-stone-200 dark:border-stone-800 absolute w-full overflow-hidden transition-all duration-500 ease-in-out max-h-0 opacity-0">
+            <div class="px-6 py-10 space-y-6 text-center">
+                <a href="#inicio" class="mobile-link block text-lg font-serif text-stone-800 dark:text-stone-100 hover:text-gold-500 transition-colors transform hover:scale-105 duration-200">Inicio</a>
+                <a href="#tratamientos" class="mobile-link block text-lg font-serif text-stone-800 dark:text-stone-100 hover:text-gold-500 transition-colors transform hover:scale-105 duration-200">Tratamientos</a>
+                <a href="#contacto" class="mobile-link block text-lg font-serif text-stone-800 dark:text-stone-100 hover:text-gold-500 transition-colors transform hover:scale-105 duration-200">Contacto</a>
+            </div>
+        </div>
+    </nav>
+
+    <section id="inicio" class="h-screen relative flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="img2/Entrada.jpg" alt="Spa Background" class="w-full h-full object-cover brightness-[0.85] dark:brightness-[0.4]">
+            <div class="absolute inset-0 bg-stone-900/20 dark:bg-stone-900/40"></div>
+        </div>
+        <div class="relative z-10 text-center px-4 max-w-5xl mx-auto mt-16">
+           
+            
+            <div class="mb-2 flex justify-center py-4">
+                <h1 class="font-cursive text-7xl md:text-9xl lg:text-[10rem] text-white font-normal animate-write whitespace-nowrap drop-shadow-2xl px-4 py-2">
+                    La Fenicia
+                </h1>
+            </div>
+
+            <p class="text-xl md:text-2xl text-stone-100 font-light tracking-wider animate-fade-in-up uppercase opacity-0 mt-4" style="animation-delay: 0.8s; animation-fill-mode: forwards;">
+                Estética y Bienestar
+            </p>
+            <div class="mt-12 animate-fade-in-up opacity-0" style="animation-delay: 1.2s; animation-fill-mode: forwards;">
+                <a href="#tratamientos" class="inline-block px-8 py-3 border border-white text-white hover:bg-white hover:text-stone-900 transition-all duration-300 text-sm tracking-[0.2em] uppercase">
+                    Descubre Más
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="tratamientos" class="py-32 px-6 lg:px-12 max-w-8xl mx-auto bg-stone-50 dark:bg-stone-900 transition-colors">
+        <div class="text-center mb-16 reveal-on-scroll">
+            <!-- <span class="text-gold-500 text-sm font-bold tracking-[0.2em] uppercase block mb-4">Nuestros Servicios</span> -->
+            <h2 class="text-4xl md:text-5xl font-serif text-stone-900 dark:text-stone-100 mb-6">
+                Nuestros Tratamientos
+            </h2>
+            
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 max-w-[1500px] mx-auto items-stretch">
+            
+            <div class="group reveal-on-scroll delay-[100ms] flex h-full cursor-pointer">
+                <div class="w-full bg-stone-200 dark:bg-stone-800 rounded-xl overflow-hidden shadow-xl transition-transform duration-500 group-hover:-translate-y-2 flex flex-col">
+                    <div class="h-80 shrink-0 overflow-hidden relative">
+                        <img src="img2/LimpiezaFacial.png" alt="Limpieza Facial" class="w-full h-full object-cover absolute inset-0 transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div class="p-6 flex flex-col grow bg-white dark:bg-stone-800 relative z-10">
+                        <h3 class="text-xl font-serif text-stone-900 dark:text-white mb-4">Limpieza Facial Profunda</h3>
+                        <div class="text-stone-500 dark:text-stone-400 text-sm leading-relaxed space-y-2 flex-grow">
+                            <p>La sesión consiste en:</p>
+                            <ul class="list-disc pl-5 space-y-1">
+                                <li>Higiene inicial con gel o leche de limpieza.</li>
+                                <li>Scrub de exfoliación facial.</li>
+                                <li>Microdermoabrasión con punta de diamante, para eliminar impurezas y todas las células muertas.</li>
+                                <li>Extracción de comedones y puntos negros.</li>
+                                <li>Máscara Descongestiva Hidratante.</li>
+                                <li>Máscara de tratamiento según necesidad del paciente.</li>
+                                <li>Serum final y Protector Solar.</li>
+                            </ul>
+                        </div>
+                        <a href="https://wa.me/5491159207118?text=Hola,%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20Limpieza%20Facial%20Profunda." target="_blank" class="mt-6 w-full flex items-center justify-center space-x-2 border border-gold-500 text-gold-500 dark:text-gold-300 dark:border-gold-300 hover:bg-gold-500 hover:text-white dark:hover:bg-gold-300 dark:hover:text-stone-900 transition-colors duration-300 py-3 rounded text-sm font-bold tracking-widest uppercase">
+                            <i class="fab fa-whatsapp text-lg"></i>
+                             <span>Más Información</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="group reveal-on-scroll delay-[200ms] flex h-full cursor-pointer">
+                <div class="w-full bg-stone-200 dark:bg-stone-800 rounded-xl overflow-hidden shadow-xl transition-transform duration-500 group-hover:-translate-y-2 flex flex-col">
+                    <div class="h-80 shrink-0 overflow-hidden relative">
+                        <img src="img2/AntiAge.png" alt="Anti Age" class="w-full h-full object-cover absolute inset-0 transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div class="p-6 flex flex-col grow bg-white dark:bg-stone-800 relative z-10">
+                        <h3 class="text-xl font-serif text-stone-900 dark:text-white mb-4">Anti Age con Radiofrecuencia</h3>
+                        <div class="text-stone-500 dark:text-stone-400 text-sm leading-relaxed space-y-2 flex-grow">
+                            <p>El Tratamiento ANTI AGE con Radiofrecuencia está diseñado para rejuvenecer tu piel, generar colágeno y elastina con una combinación de técnicas:</p>
+                            <ul class="list-disc pl-5 space-y-1">
+                                <li>Limpieza + Scrub.</li>
+                                <li>Microdermoabrasión con Punta de Diamante.</li>
+                                <li>Radiofrecuencia Tripolar.</li>
+                                <li>Máscara Anti Age según biotipo cutáneo.</li>
+                                <li>Protector Solar.</li>
+                            </ul>
+                        </div>
+                        <a href="https://wa.me/5491159207118?text=Hola,%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20Anti%20Age%20con%20Radiofrecuencia." target="_blank" class="mt-6 w-full flex items-center justify-center space-x-2 border border-gold-500 text-gold-500 dark:text-gold-300 dark:border-gold-300 hover:bg-gold-500 hover:text-white dark:hover:bg-gold-300 dark:hover:text-stone-900 transition-colors duration-300 py-3 rounded text-sm font-bold tracking-widest uppercase">
+                            <i class="fab fa-whatsapp text-lg"></i>
+                             <span>Más Información</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="group reveal-on-scroll delay-[100ms] flex h-full cursor-pointer">
+                <div class="w-full bg-stone-200 dark:bg-stone-800 rounded-xl overflow-hidden shadow-xl transition-transform duration-500 group-hover:-translate-y-2 flex flex-col">
+                    <div class="h-80 shrink-0 overflow-hidden relative">
+                        <img src="img2/Exfo.png     " alt="Exfoliación" class="w-full h-full object-cover absolute inset-0 transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div class="p-6 flex flex-col grow bg-white dark:bg-stone-800 relative z-10">
+                        <h3 class="text-xl font-serif text-stone-900 dark:text-white mb-4">Exfoliación Corporal con Hidratación Profunda</h3>
+                        <div class="text-stone-500 dark:text-stone-400 text-sm leading-relaxed space-y-2 flex-grow">
+                            <p>La Exfoliación Corporal con Hidratación Profunda ofrece una experiencia de bienestar, piel fresca, luminosa y rejuvenecida.</p>
+                            <p>Limpia y exfolia tu piel liberándola de impurezas y células muertas para luego nutrirla y suavizar todo tu cuerpo, brindando elasticidad y luminosidad.</p>
+                        </div>
+                        <a href="https://wa.me/5491159207118?text=Hola,%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20Exfoliaci%C3%B3n%20Corporal." target="_blank" class="mt-6 w-full flex items-center justify-center space-x-2 border border-gold-500 text-gold-500 dark:text-gold-300 dark:border-gold-300 hover:bg-gold-500 hover:text-white dark:hover:bg-gold-300 dark:hover:text-stone-900 transition-colors duration-300 py-3 rounded text-sm font-bold tracking-widest uppercase">
+                            <i class="fab fa-whatsapp text-lg"></i>
+                             <span>Más Información</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="group reveal-on-scroll delay-[300ms] flex h-full cursor-pointer">
+                <div class="w-full bg-stone-200 dark:bg-stone-800 rounded-xl overflow-hidden shadow-xl transition-transform duration-500 group-hover:-translate-y-2 flex flex-col">
+                    <div class="h-80 shrink-0 overflow-hidden relative">
+                        <img src="img/MesoterapiaCapilarFemenina.png" alt="Mesoterapia Capilar Femenina" class="w-full h-full object-cover absolute inset-0 transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div class="p-6 flex flex-col grow bg-white dark:bg-stone-800 relative z-10">
+                        <h3 class="text-xl font-serif text-stone-900 dark:text-white mb-4">Mesoterapia Capilar Femenina</h3>
+                        <div class="text-stone-500 dark:text-stone-400 text-sm leading-relaxed space-y-2 flex-grow">
+                            <p>Recuperá la vitalidad y fuerza de tu cabello. Es uno de los tratamientos de elección para tratar la alopecia:</p>
+                            <ul class="list-disc pl-5 space-y-1">
+                                <li>Reduce hasta un 70% la caída del cabello al mejorar la circulación sanguínea del cuero cabelludo.</li>
+                                <li>Estimula el crecimiento capilar utilizando principios activos que estimulan los folículos.</li>
+                                <li>Mejora la salud del cuero cabelludo, equilibrando su hidratación, oxigenación y nutrición.</li>
+                            </ul>
+                            
+                        </div>
+                        <a href="https://wa.me/5491159207118?text=Hola,%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20Mesoterapia%20Capilar%20Femenina." target="_blank" class="mt-6 w-full flex items-center justify-center space-x-2 border border-gold-500 text-gold-500 dark:text-gold-300 dark:border-gold-300 hover:bg-gold-500 hover:text-white dark:hover:bg-gold-300 dark:hover:text-stone-900 transition-colors duration-300 py-3 rounded text-sm font-bold tracking-widest uppercase">
+                            <i class="fab fa-whatsapp text-lg"></i>
+                             <span>Más Información</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="group reveal-on-scroll delay-[300ms] flex h-full cursor-pointer">
+                <div class="w-full bg-stone-200 dark:bg-stone-800 rounded-xl overflow-hidden shadow-xl transition-transform duration-500 group-hover:-translate-y-2 flex flex-col">
+                    <div class="h-80 shrink-0 overflow-hidden relative">
+                        <img src="img2/MesoterapiaMasculina.png" alt="Mesoterapia Capilar Masculina" class="w-full h-full object-cover absolute inset-0 transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div class="p-6 flex flex-col grow bg-white dark:bg-stone-800 relative z-10">
+                        <h3 class="text-xl font-serif text-stone-900 dark:text-white mb-4">Mesoterapia Capilar Masculina</h3>
+                        <div class="text-stone-500 dark:text-stone-400 text-sm leading-relaxed space-y-2 flex-grow">
+                            <p>Recuperá la vitalidad y fuerza de tu cabello. Es uno de los tratamientos de elección para tratar la alopecia:</p>
+                            <ul class="list-disc pl-5 space-y-1">
+                                <li>Reduce hasta un 70% la caída del cabello al mejorar la circulación sanguínea del cuero cabelludo.</li>
+                                <li>Estimula el crecimiento capilar utilizando principios activos que estimulan los folículos.</li>
+                                <li>Mejora la salud del cuero cabelludo, equilibrando su hidratación, oxigenación y nutrición.</li>
+                            </ul>
+                            
+                        </div>
+                        <a href="https://wa.me/5491159207118?text=Hola,%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20Mesoterapia%20Capilar%20Masculina." target="_blank" class="mt-6 w-full flex items-center justify-center space-x-2 border border-gold-500 text-gold-500 dark:text-gold-300 dark:border-gold-300 hover:bg-gold-500 hover:text-white dark:hover:bg-gold-300 dark:hover:text-stone-900 transition-colors duration-300 py-3 rounded text-sm font-bold tracking-widest uppercase">
+                            <i class="fab fa-whatsapp text-lg"></i>
+                             <span>Más Información</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="group reveal-on-scroll delay-[300ms] flex h-full cursor-pointer">
+                <div class="w-full bg-stone-200 dark:bg-stone-800 rounded-xl overflow-hidden shadow-xl transition-transform duration-500 group-hover:-translate-y-2 flex flex-col">
+                    <div class="h-80 shrink-0 overflow-hidden relative">
+                        <img src="img2/PlasmaCapilar.png" alt="Plasma Rico en Plaquetas Capilar" class="w-full h-full object-cover absolute inset-0 transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div class="p-6 flex flex-col grow bg-white dark:bg-stone-800 relative z-10">
+                        <h3 class="text-xl font-serif text-stone-900 dark:text-white mb-4">Plasma Rico en Plaquetas Capilar</h3>
+                        <div class="text-stone-500 dark:text-stone-400 text-sm leading-relaxed space-y-2 flex-grow">
+                            <p>El Plasma Rico en Plaquetas Capilar (PRP) es un tratamiento regenerativo que utiliza los factores de crecimiento obtenidos de la propia sangre del paciente para estimular los folículos pilosos y fortalecer el cabello desde la raíz.</p>
+                            <p>Está indicado para tratar distintos tipos de alopecia, disminuir la caída del cabello y mejorar la densidad, calidad y vitalidad capilar.</p>
+                            <p>Beneficios:</p>
+
+                            <ul class="list-disc pl-5 space-y-1">
+                                <li>Estimula el crecimiento de cabello nuevo.</li>
+                                <li>Fortalece los folículos pilosos debilitados.</li>
+                                <li>Reduce la caída capilar progresiva.</li>
+                                <li>Mejora el grosor, brillo y calidad del cabello.</li>
+                                <li>Favorece la regeneración celular del cuero cabelludo.</li>
+                            </ul>
+                            
+                        </div>
+                        <a href="https://wa.me/5491159207118?text=Hola,%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20Plasma%20Rico%20en%20Plaquetas%20Capilar." target="_blank" class="mt-6 w-full flex items-center justify-center space-x-2 border border-gold-500 text-gold-500 dark:text-gold-300 dark:border-gold-300 hover:bg-gold-500 hover:text-white dark:hover:bg-gold-300 dark:hover:text-stone-900 transition-colors duration-300 py-3 rounded text-sm font-bold tracking-widest uppercase">
+                            <i class="fab fa-whatsapp text-lg"></i>
+                             <span>Más Información</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="group reveal-on-scroll delay-[200ms] flex h-full cursor-pointer">
+                <div class="w-full bg-stone-200 dark:bg-stone-800 rounded-xl overflow-hidden shadow-xl transition-transform duration-500 group-hover:-translate-y-2 flex flex-col">
+                    <div class="h-80 shrink-0 overflow-hidden relative">
+                        <img src="img2/PlasmaFacial.png" alt="PRP" class="w-full h-full object-cover absolute inset-0 transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div class="p-6 flex flex-col grow bg-white dark:bg-stone-800 relative z-10">
+                        <h3 class="text-xl font-serif text-stone-900 dark:text-white mb-4">Plasma Rico en Plaquetas Facial</h3>
+                        <div class="text-stone-500 dark:text-stone-400 text-sm leading-relaxed space-y-2 flex-grow">
+                            <p>Es un tratamiento médico de regeneración celular. Está indicado para:</p>
+                            <ul class="list-disc pl-5 space-y-1">
+                                <li>Rejuvenecimiento Facial.</li>
+                                <li>Celulitis y Estrías.</li>
+                                <li>Alopecias masculina y femenina.</li>
+                                <li>Flacidez.</li>
+                                <li>Cicatrices Inestésicas.</li>
+                            </ul>
+                        </div>
+                        <a href="https://wa.me/5491159207118?text=Hola,%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20Plasma%20Rico%20en%20Plaquetas%20Facial." target="_blank" class="mt-6 w-full flex items-center justify-center space-x-2 border border-gold-500 text-gold-500 dark:text-gold-300 dark:border-gold-300 hover:bg-gold-500 hover:text-white dark:hover:bg-gold-300 dark:hover:text-stone-900 transition-colors duration-300 py-3 rounded text-sm font-bold tracking-widest uppercase">
+                            <i class="fab fa-whatsapp text-lg"></i>
+                             <span>Más Información</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="group reveal-on-scroll delay-[300ms] flex h-full cursor-pointer">
+                <div class="w-full bg-stone-200 dark:bg-stone-800 rounded-xl overflow-hidden shadow-xl transition-transform duration-500 group-hover:-translate-y-2 flex flex-col">
+                    <div class="h-80 shrink-0 overflow-hidden relative">
+                        <img src="img/PackReductor.png" alt="Pack Reductor" class="w-full h-full object-cover absolute inset-0 transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div class="p-6 flex flex-col grow bg-white dark:bg-stone-800 relative z-10">
+                        <h3 class="text-xl font-serif text-stone-900 dark:text-white mb-4">Pack Reductor y Modelador</h3>
+                        <div class="text-stone-500 dark:text-stone-400 text-sm leading-relaxed space-y-2 flex-grow">
+                            <p>Este Pack es para quienes quieran reducir adiposidad localizada, modelar, tratar celulitis, tonificar, reafirmar, eliminar toxinas y la retención de líquidos.</p>
+                            <p>Trata 1 zona con 3 equipos diferentes a elección según cada necesidad, y consta de 4 sesiones (una por semana) de una hora y media cada una:</p>
+                            <ul class="list-disc pl-5 space-y-1">
+                                <li><strong>Vela Slim Plus:</strong> combate la celulitis y modela.</li>
+                                <li><strong>Lipolaser:</strong> reduce adiposidad localizada.</li>
+                                <li><strong>Electrodos o Botas de Presoterapia:</strong> tonifica, reafirma, elimina toxinas y la retención de líquidos.</li>
+                            </ul>
+                        </div>
+                        <a href="https://wa.me/5491159207118?text=Hola,%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20el%20Pack%20Reductor%20y%20Modelador." target="_blank" class="mt-6 w-full flex items-center justify-center space-x-2 border border-gold-500 text-gold-500 dark:text-gold-300 dark:border-gold-300 hover:bg-gold-500 hover:text-white dark:hover:bg-gold-300 dark:hover:text-stone-900 transition-colors duration-300 py-3 rounded text-sm font-bold tracking-widest uppercase">
+                            <i class="fab fa-whatsapp text-lg"></i>
+                             <span>Más Información</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="group reveal-on-scroll delay-[100ms] flex h-full cursor-pointer">
+                <div class="w-full bg-stone-200 dark:bg-stone-800 rounded-xl overflow-hidden shadow-xl transition-transform duration-500 group-hover:-translate-y-2 flex flex-col">
+                    <div class="h-80 shrink-0 overflow-hidden relative">
+                        <img src="img2/Dermapen.png" alt="Dermapen" class="w-full h-full object-cover absolute inset-0 transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div class="p-6 flex flex-col grow bg-white dark:bg-stone-800 relative z-10">
+                        <h3 class="text-xl font-serif text-stone-900 dark:text-white mb-4">Sesión de Dermapen</h3>
+                        <div class="text-stone-500 dark:text-stone-400 text-sm leading-relaxed space-y-2 flex-grow">
+                            <p>Es un tratamiento de microneedling con el que podés reducir las arrugas y líneas finas, mejorar la textura y tono de la piel, disminuir el tamaño de los poros, reducir el aspecto de cicatrices de acné y manchas.</p>
+                            <p>El resultado es una piel más suave, firme, lisa, uniforme y rejuvenecida.</p>
+                            <p>Dermapen es un tratamiento seguro e indoloro, que no requiere tiempo de inactividad. Podrás volver a tus actividades diarias inmediatamente.</p>
+                        </div>
+                        <a href="https://wa.me/5491159207118?text=Hola,%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20la%20Sesi%C3%B3n%20de%20Dermapen." target="_blank" class="mt-6 w-full flex items-center justify-center space-x-2 border border-gold-500 text-gold-500 dark:text-gold-300 dark:border-gold-300 hover:bg-gold-500 hover:text-white dark:hover:bg-gold-300 dark:hover:text-stone-900 transition-colors duration-300 py-3 rounded text-sm font-bold tracking-widest uppercase">
+                            <i class="fab fa-whatsapp text-lg"></i>
+                             <span>Más Información</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="group reveal-on-scroll delay-[200ms] flex h-full cursor-pointer">
+                <div class="w-full bg-stone-200 dark:bg-stone-800 rounded-xl overflow-hidden shadow-xl transition-transform duration-500 group-hover:-translate-y-2 flex flex-col">
+                    <div class="h-80 shrink-0 overflow-hidden relative">
+                        <img src="img2/HIFU.png" alt="HIFU" class="w-full h-full object-cover absolute inset-0 transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div class="p-6 flex flex-col grow bg-white dark:bg-stone-800 relative z-10">
+                        <h3 class="text-xl font-serif text-stone-900 dark:text-white mb-4">HIFU Facial y Corporal</h3>
+                        <div class="text-stone-500 dark:text-stone-400 text-sm leading-relaxed space-y-2 flex-grow">
+                            <p>El HIFU es un Ultrasonido Focalizado de Alta Intensidad. Se utiliza para contrarrestar el envejecimiento de la piel, aumentando la producción del colágeno, minimizando arrugas y surcos en diferentes zonas de la cara, cuello y escote.</p>
+                            <p>Es un sistema de rejuvenecimiento y remodelación corporal y facial no invasivo, que mejora la estructura, tonicidad y apariencia de la piel, siendo capaz también de reducir los cúmulos grasos de adiposidad localizada.</p>
+                        </div>
+                        <a href="https://wa.me/5491159207118?text=Hola,%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20HIFU%20Facial%20y%20Corporal." target="_blank" class="mt-6 w-full flex items-center justify-center space-x-2 border border-gold-500 text-gold-500 dark:text-gold-300 dark:border-gold-300 hover:bg-gold-500 hover:text-white dark:hover:bg-gold-300 dark:hover:text-stone-900 transition-colors duration-300 py-3 rounded text-sm font-bold tracking-widest uppercase">
+                            <i class="fab fa-whatsapp text-lg"></i>
+                             <span>Más Información</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="group reveal-on-scroll delay-[300ms] flex h-full cursor-pointer">
+                <div class="w-full bg-stone-200 dark:bg-stone-800 rounded-xl overflow-hidden shadow-xl transition-transform duration-500 group-hover:-translate-y-2 flex flex-col">
+                    <div class="h-80 shrink-0 overflow-hidden relative">
+                        <img src="img2/Peeling.png" alt="Peeling" class="w-full h-full object-cover absolute inset-0 transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div class="p-6 flex flex-col grow bg-white dark:bg-stone-800 relative z-10">
+                        <h3 class="text-xl font-serif text-stone-900 dark:text-white mb-4">Peeling Facial</h3>
+                        <div class="text-stone-500 dark:text-stone-400 text-sm leading-relaxed space-y-2 flex-grow">
+                            <p>Se trata de una exfoliación o descamación de la piel que utiliza sustancias químicas o enzimáticas para renovar las capas y eliminar imperfecciones con el fin de renovarla y rejuvenecerla.</p>
+                            <p>El peeling facial permite:</p>
+                            <ul class="list-disc pl-5 space-y-1">
+                                <li>Renovar la piel del rostro y unificar su tono.</li>
+                                <li>Eliminar algunas de las manchas causadas por el sol.</li>
+                                <li>Disminuir arrugas y líneas de expresión.</li>
+                                <li>Eliminar impurezas para conseguir una piel más rejuvenecida y luminosa.</li>
+                            </ul>
+                        </div>
+                        <a href="https://wa.me/5491159207118?text=Hola,%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20Peeling%20Facial." target="_blank" class="mt-6 w-full flex items-center justify-center space-x-2 border border-gold-500 text-gold-500 dark:text-gold-300 dark:border-gold-300 hover:bg-gold-500 hover:text-white dark:hover:bg-gold-300 dark:hover:text-stone-900 transition-colors duration-300 py-3 rounded text-sm font-bold tracking-widest uppercase">
+                            <i class="fab fa-whatsapp text-lg"></i>
+                             <span>Más Información</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="group reveal-on-scroll delay-[200ms] flex h-full cursor-pointer">
+                <div class="w-full bg-stone-200 dark:bg-stone-800 rounded-xl overflow-hidden shadow-xl transition-transform duration-500 group-hover:-translate-y-2 flex flex-col">
+                    <div class="h-80 shrink-0 overflow-hidden relative">
+                        <img src="img/PDRN.png" alt="Mesoterapia Coreana" class="w-full h-full object-cover absolute inset-0 transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div class="p-6 flex flex-col grow bg-white dark:bg-stone-800 relative z-10">
+                        <h3 class="text-xl font-serif text-stone-900 dark:text-white mb-4">PDRN - Mesoterapia Coreana</h3>
+                        <div class="text-stone-500 dark:text-stone-400 text-sm leading-relaxed space-y-2 flex-grow">
+                            <p>La Mesoterapia con PDRN (Polideoxirribonucleótido), comúnmente conocida por sus principios bioactivos derivados del ADN de salmón, es un tratamiento revolucionario de bioestimulación facial. A diferencia de otros tratamientos que solo rellenan o hidratan temporalmente, el PDRN actúa como un reparador celular: penetra en la dermis para curar la piel desde adentro hacia afuera.</p>
+                            <ul class="list-disc pl-5 space-y-1">
+                                <li>Mejora significativamente la textura, el tono y la elasticidad de la piel avejentada.</li>
+                                <li>Acelera la reparación de la piel, siendo excelente para tratar secuelas de acné, poros dilatados y microlesiones.</li>
+                                <li>Calma las pieles reactivas o con rosácea, fortaleciendo la barrera protectora de la piel.</li>
+                                <li>Retiene la humedad en las capas profundas, logrando un rostro fresco, descansado y con un brillo natural inigualable.</li>
+                            </ul>
+                        </div>
+                        <a href="https://wa.me/5491159207118?text=Hola,%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20PDRN%20-%20Mesoterapia%20Coreana." target="_blank" class="mt-6 w-full flex items-center justify-center space-x-2 border border-gold-500 text-gold-500 dark:text-gold-300 dark:border-gold-300 hover:bg-gold-500 hover:text-white dark:hover:bg-gold-300 dark:hover:text-stone-900 transition-colors duration-300 py-3 rounded text-sm font-bold tracking-widest uppercase">
+                            <i class="fab fa-whatsapp text-lg"></i>
+                             <span>Más Información</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="group reveal-on-scroll delay-[200ms] flex h-full cursor-pointer">
+                <div class="w-full bg-stone-200 dark:bg-stone-800 rounded-xl overflow-hidden shadow-xl transition-transform duration-500 group-hover:-translate-y-2 flex flex-col">
+                    <div class="h-80 shrink-0 overflow-hidden relative">
+                        <img src="img/DepilacionDefinitiva.png" alt="Depilacion Definitiva" class="w-full h-full object-cover absolute inset-0 transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div class="p-6 flex flex-col grow bg-white dark:bg-stone-800 relative z-10">
+                        <h3 class="text-xl font-serif text-stone-900 dark:text-white mb-4">Depilación Definitiva</h3>
+                        <div class="text-stone-500 dark:text-stone-400 text-sm leading-relaxed space-y-2 flex-grow">
+                            <p>La depilación láser definitiva es un tratamiento que destruye el folículo piloso mediante energía lumínica.</p>
+                            <p>Decile adiós a los métodos tradicionales y dolorosos. Utilizamos tecnología láser de última generación para ofrecerte una depilación progresiva, eficaz y cuidando al máximo tu piel.</p>
+                            <ul class="list-disc pl-5 space-y-1">
+                                <li>Eliminación permanente del vello no deseado.</li>
+                                <li>Previene la foliculitis (vellos encarnados).</li>
+                                <li>Suaviza progresivamente la piel sin dañarla.</li>
+                                <li>La tecnología laser combina tres longitudes de onda, es indoloro y apto para todo tipo de pieles.</li>
+                            </ul>
+                            <p>Las sesiones se realizan cada 30 a 45 días. Un tratamiento completo suele requerir entre 8 y 12 sesiones, dependiendo de la zona, el grosor del pelo y el fototipo cutáneo.</p>
+                        </div>
+                        <a href="https://wa.me/5491159207118?text=Hola,%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20Depilaci%C3%B3n%20Definitiva." target="_blank" class="mt-6 w-full flex items-center justify-center space-x-2 border border-gold-500 text-gold-500 dark:text-gold-300 dark:border-gold-300 hover:bg-gold-500 hover:text-white dark:hover:bg-gold-300 dark:hover:text-stone-900 transition-colors duration-300 py-3 rounded text-sm font-bold tracking-widest uppercase">
+                            <i class="fab fa-whatsapp text-lg"></i>
+                             <span>Más Información</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="group reveal-on-scroll delay-[200ms] flex h-full cursor-pointer">
+                <div class="w-full bg-stone-200 dark:bg-stone-800 rounded-xl overflow-hidden shadow-xl transition-transform duration-500 group-hover:-translate-y-2 flex flex-col">
+                    <div class="h-80 shrink-0 overflow-hidden relative">
+                        <img src="img/Radiofrecuencia.png" alt="Radiofrecuencia" class="w-full h-full object-cover absolute inset-0 transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div class="p-6 flex flex-col grow bg-white dark:bg-stone-800 relative z-10">
+                        <h3 class="text-xl font-serif text-stone-900 dark:text-white mb-4">Radiofrecuencia</h3>
+                        <div class="text-stone-500 dark:text-stone-400 text-sm leading-relaxed space-y-2 flex-grow">
+                            <p>El Tratamiento de Radiofrecuencia está diseñado para rejuvenecer tu piel, generar colágeno y elastina con una combinación de técnicas</p>
+                            <p>En la sesión realizamos:</p>
+                            <ul class="list-disc pl-5 space-y-1">
+                                <li>Limpieza + Scrub.</li>
+                                <li>Microdermoabrasión con Punta de Diamante.</li>
+                                <li>Radiofrecuencia Tripolar.</li>
+                                <li>Máscara Anti Age.</li>
+                                <li>Serum y Protector Solar.</li>
+                            </ul>
+                            <p>Se recomienda realizar las sesiones cada 15 o 21 dias.</p>
+                        </div>
+                        <a href="https://wa.me/5491159207118?text=Hola,%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20Radiofrecuencia." target="_blank" class="mt-6 w-full flex items-center justify-center space-x-2 border border-gold-500 text-gold-500 dark:text-gold-300 dark:border-gold-300 hover:bg-gold-500 hover:text-white dark:hover:bg-gold-300 dark:hover:text-stone-900 transition-colors duration-300 py-3 rounded text-sm font-bold tracking-widest uppercase">
+                            <i class="fab fa-whatsapp text-lg"></i>
+                             <span>Más Información</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            
+            <div class="group reveal-on-scroll delay-[200ms] flex h-full cursor-pointer">
+                <div class="w-full bg-stone-200 dark:bg-stone-800 rounded-xl overflow-hidden shadow-xl transition-transform duration-500 group-hover:-translate-y-2 flex flex-col">
+                    <div class="h-80 shrink-0 overflow-hidden relative">
+                        <img src="img/Presoteriapia.png" alt="Presoterapia" class="w-full h-full object-cover absolute inset-0 transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div class="p-6 flex flex-col grow bg-white dark:bg-stone-800 relative z-10">
+                        <h3 class="text-xl font-serif text-stone-900 dark:text-white mb-4">Presoterapia</h3>
+                        <div class="text-stone-500 dark:text-stone-400 text-sm leading-relaxed space-y-2 flex-grow">
+                            <p>La presoterapia es un tratamiento que aplica presión de aire controlada mediante botas y actúa como un masajeador profundo que estimula el sistema linfático y circulatorio, ayudando a eliminar líquidos, toxinas y grasas.</p>
+                            <p>Beneficios:</p>
+                            <ul class="list-disc pl-5 space-y-1">
+                                <li>Reduce la retención de líquidos y la hinchazón (edemas).</li>
+                                <li>Mejora la circulacion y alivia la pesadez y el dolor en las piernas, siendo ideal para tratar problemas venosos leves.</li>
+                                <li>Mejora la firmeza y oxigenación de los tejidos.</li>
+                            </ul>
+                            <p>Las sesiones suelen durar entre 30 y 45 minutos.</p>
+                            <p><b>Está contraindicado para personas con problemas cardíacos graves, trombosis recientes o hipertensión no controlada</b>.</p>
+                        </div>
+                        <a href="https://wa.me/5491159207118?text=Hola,%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20Presoterapia." target="_blank" class="mt-6 w-full flex items-center justify-center space-x-2 border border-gold-500 text-gold-500 dark:text-gold-300 dark:border-gold-300 hover:bg-gold-500 hover:text-white dark:hover:bg-gold-300 dark:hover:text-stone-900 transition-colors duration-300 py-3 rounded text-sm font-bold tracking-widest uppercase">
+                            <i class="fab fa-whatsapp text-lg"></i>
+                             <span>Más Información</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="max-w-[1600px] mx-auto mt-12 text-center reveal-on-scroll">
+        <p class="text-sm md:text-base text-stone-500 dark:text-stone-400 italic">
+            <b>Las imágenes son ilustrativas y pueden diferir de la realidad. </b>
+        </p>
+    </div>
+
+    <section id="contacto" class="py-32 relative overflow-hidden flex items-center justify-center min-h-[70vh]">
+        <div class="absolute inset-0 bg-stone-100 dark:bg-stone-900/50 -z-10"></div>
+        <div class="absolute right-0 bottom-0 w-[500px] h-[500px] bg-gold-200/20 rounded-full blur-3xl"></div>
+        <div class="absolute left-0 top-0 w-[500px] h-[500px] bg-stone-300/20 dark:bg-stone-700/20 rounded-full blur-3xl"></div>
+
+        <div class="max-w-4xl mx-auto px-6 text-center z-10">
+            <div class="reveal-on-scroll">
+                <h2 class="text-5xl md:text-6xl font-serif text-stone-900 dark:text-white mb-8">Reserva tu Cita</h2>
+          
+                
+                <div class="flex flex-col md:flex-row items-center justify-center gap-8 mb-14">
+                    <div class="flex items-center space-x-3 text-stone-700 dark:text-stone-300">
+                        <i class="fas fa-map-marker-alt text-gold-500 text-xl"></i>
+                        <span class="text-lg">Av. Pueyrredón 1655, CABA</span>
+                    </div>
+                    <div class="hidden md:block w-px h-8 bg-stone-300 dark:bg-stone-700"></div>
+                    <div class="flex items-center space-x-3 text-stone-700 dark:text-stone-300">
+                        <i class="fas fa-clock text-gold-500 text-xl"></i>
+                        <span class="text-lg">Lun a Vie: 10 a 18 hs | Sáb: 10 a 16 hs</span>
+                    </div>
+                </div>
+                
+                <div class="relative inline-block group">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-[#25D366] to-[#128C7E] rounded-full blur opacity-40 group-hover:opacity-75 transition duration-500 animate-pulse-slow"></div>
+                    <a href="https://wa.me/5491159207118?text=Hola,%20vengo%20de%20la%20página%20y%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre:%20" target="_blank" class="relative flex items-center justify-center space-x-4 bg-[#25D366] hover:bg-[#20bd5a] text-white font-sans font-bold uppercase tracking-widest py-5 px-10 md:px-14 rounded-full shadow-2xl transition-all duration-300 transform group-hover:-translate-y-1">
+                        <i class="fab fa-whatsapp text-4xl md:text-5xl"></i>
+                        <span class="text-lg md:text-xl">Agendar por WhatsApp</span>
+                    </a>
+                </div>
+
+                <div class="flex justify-center space-x-6 mt-16">
+                    <a href="https://www.instagram.com/lafenicia.esteticaybienestar/" class="w-14 h-14 rounded-full glass flex items-center justify-center text-stone-600 dark:text-stone-300 hover:bg-gold-500 hover:text-white hover:border-gold-500 transition-all duration-300 shadow-sm">
+                        <i class="fab fa-instagram text-2xl"></i>
+                    </a>
+                    <a href="https://www.facebook.com/lafenicia.esteticaybienestar/" class="w-14 h-14 rounded-full glass flex items-center justify-center text-stone-600 dark:text-stone-300 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all duration-300 shadow-sm">
+                        <i class="fab fa-facebook-f text-2xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-stone-50 dark:bg-stone-950 py-12 border-t border-stone-200 dark:border-stone-800 text-center">
+        <p class="font-cursive text-4xl text-stone-800 dark:text-gold-100 mb-2">La Fenicia</p>
+        <p class="text-xs text-stone-400 uppercase tracking-widest">© 2026. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        // 1. MODO OSCURO
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const darkIcon = document.getElementById('theme-toggle-dark-icon');
+        const lightIcon = document.getElementById('theme-toggle-light-icon');
+        const html = document.documentElement;
+
+        function checkTheme() {
+            if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                html.classList.add('dark');
+                lightIcon.classList.remove('hidden');
+                darkIcon.classList.add('hidden');
+            } else {
+                html.classList.remove('dark');
+                lightIcon.classList.add('hidden');
+                darkIcon.classList.remove('hidden');
+            }
+        }
+        checkTheme();
+
+        themeToggleBtn.addEventListener('click', () => {
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                lightIcon.classList.add('hidden');
+                darkIcon.classList.remove('hidden');
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                lightIcon.classList.remove('hidden');
+                darkIcon.classList.add('hidden');
+            }
+        });
+
+        // 2. MENÚ MÓVIL ANIMADO
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileIcon = document.getElementById('mobile-icon');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        let isMenuOpen = false;
+
+        mobileBtn.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            
+            if (isMenuOpen) {
+                mobileMenu.classList.remove('max-h-0', 'opacity-0');
+                mobileMenu.classList.add('max-h-[500px]', 'opacity-100'); 
+                mobileIcon.classList.remove('fa-bars');
+                mobileIcon.classList.add('fa-times', 'rotate-90');
+            } else {
+                mobileMenu.classList.remove('max-h-[500px]', 'opacity-100');
+                mobileMenu.classList.add('max-h-0', 'opacity-0');
+                mobileIcon.classList.remove('fa-times', 'rotate-90');
+                mobileIcon.classList.add('fa-bars');
+            }
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                isMenuOpen = false;
+                mobileMenu.classList.remove('max-h-[500px]', 'opacity-100');
+                mobileMenu.classList.add('max-h-0', 'opacity-0');
+                mobileIcon.classList.remove('fa-times', 'rotate-90');
+                mobileIcon.classList.add('fa-bars');
+            });
+        });
+
+        // 3. ANIMACIONES SCROLL
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
+
